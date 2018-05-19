@@ -14,13 +14,14 @@ type
     procedure initialisePopulation(geneLength : integer);
    public
     Individuals : array of TIndividual;
-    constructor Create(geneLength : integer);
+    constructor Create(geneLength, sizeOfPopulation : integer);
     function getPopulationSize(): integer;
     procedure CalculatePopulationFitness(itemScores, itemWeights : array of integer; capacity : integer);
   end;
 implementation
-constructor TPopulation.Create(geneLength : integer);
+constructor TPopulation.Create(geneLength, sizeOfPopulation : integer );
 begin
+  populationSize:= sizeOfPopulation;
   setLength(individuals,populationSize);
   initialisePopulation(geneLength);
   fittest := 1;

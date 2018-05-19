@@ -12,7 +12,24 @@ type
   individualArray = array of TIndividual;
 var
   Population : TPopulation;
-
+  SelectedNumber : indexArray;
+  Parents, subset1, subset2 : individualArray;
+  ItemScore, ItemWeight : array[1..6] of integer;
+  capacity, index : integer;
+procedure splitArray(completeArray: individualArray; out Subset1; out Subset2);
+var
+  firstArray, secondArray : individualArray;
+  index, midpoint : integer;
+begin
+  midpoint := Length(completeArray) div 2;
+  for index := 1 to midpoint do
+   begin
+     firstArray[index] := completeArray[index];
+     secondArray[index] := completeArray[index + midpoint];
+   end;
+  WriteLn(Length(firstArray));
+  WriteLn(Length(secondArray));
+end;
 function rouletteSelection(population : TPopulation; parentNumber: integer): indexArray;
  var
    index, count, sum : integer;
@@ -64,9 +81,24 @@ function crossover(parent : individualArray): integer;
  begin
    Randomize();
    crossoverIndex := random(length(parent));
-
+   crossover := 1;
  end;
 
 begin
+  capacity := 40;
+  for index := 1 to 6 do
+   ItemScore[index] := index;
+  ItemWeight[1] := 10;
+  ItemWeight[2] := 5;
+  ItemWeight[3] := 15;
+  ItemWeight[4] := 12;
+  ItemWeight[5] := 20;
+  ItemWeight[6] := 16;
+  Population.Create(6,10);
+  Population.CalculatePopulationFitness(ItemScore,ItemWeight,capacity);
+  SelectedNumber:= rouletteSelection(Population,4);
+  Parents := selectParent(Population,SelectedNumber, 4);
+  splitArray(Parents,subset1,subset2);
+  ReadLn;
 end.
 
