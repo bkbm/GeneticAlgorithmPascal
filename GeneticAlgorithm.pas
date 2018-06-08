@@ -13,9 +13,11 @@ type
 var
   Population : TPopulation;
   SelectedNumber : indexArray;
-  Parents, subset1, subset2 : individualArray;
+  SelectedParents, male, female : individualArray;
   ItemScore, ItemWeight : array[1..6] of integer;
   capacity, index : integer;
+const
+  NoOfSelectedParents = 4;
 procedure splitArray(completeArray: individualArray; out Subset1; out Subset2);
 var
   firstArray, secondArray : individualArray;
@@ -75,12 +77,12 @@ function selectParent(population : TPopulation; selectedIndex: indexArray; paren
       selectParent[index] :=population.Individuals[selectedIndex[index]] ;
     end;
  end;
-function crossover(parent : individualArray): integer;
+function crossover(parent1, parent2 :TIndividual): integer;
  var
    crossoverIndex, index: integer;
  begin
    Randomize();
-   crossoverIndex := random(length(parent));
+   crossoverIndex := random(length(parent1.genes));
    crossover := 1;
  end;
 
@@ -96,9 +98,13 @@ begin
   ItemWeight[6] := 16;
   Population := TPopulation.Create(6,10);
   Population.CalculatePopulationFitness(ItemScore,ItemWeight,capacity);
-  SelectedNumber:= rouletteSelection(Population,4);
-  Parents := selectParent(Population,SelectedNumber, 4);
-  splitArray(Parents,subset1,subset2);
+  SelectedNumber:= rouletteSelection(Population,NoOfSelectedParents);
+  SelectedParents := selectParent(Population,SelectedNumber, NoOfSelectedParents);
+  splitArray(SelectedParents,male,female);
+  for index := 1 to NoOfSelectedParents div 2 do
+   begin
+    crossover(male[index],female[index]);
+   end;
   ReadLn;
 end.
 
