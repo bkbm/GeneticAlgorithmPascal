@@ -46,7 +46,7 @@ implementation
         totalWeight := totalWeight + (itemWeight[index] * genes[index]);
      if totalWeight > capacity then
       begin
-        fitness:= 0;
+        fitness:= 1;
       end
      else
       for index := 1 to geneLength do

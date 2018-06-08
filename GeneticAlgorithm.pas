@@ -21,14 +21,14 @@ var
   firstArray, secondArray : individualArray;
   index, midpoint : integer;
 begin
+  SetLength(firstArray, length(completeArray) div 2);
+  SetLength(secondArray, length(completeArray) div 2);
   midpoint := Length(completeArray) div 2;
   for index := 1 to midpoint do
    begin
      firstArray[index] := completeArray[index];
      secondArray[index] := completeArray[index + midpoint];
    end;
-  WriteLn(Length(firstArray));
-  WriteLn(Length(secondArray));
 end;
 function rouletteSelection(population : TPopulation; parentNumber: integer): indexArray;
  var
