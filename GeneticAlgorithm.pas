@@ -94,7 +94,7 @@ begin
   ItemWeight[4] := 12;
   ItemWeight[5] := 20;
   ItemWeight[6] := 16;
-  Population.Create(6,10);
+  Population := TPopulation.Create(6,10);
   Population.CalculatePopulationFitness(ItemScore,ItemWeight,capacity);
   SelectedNumber:= rouletteSelection(Population,4);
   Parents := selectParent(Population,SelectedNumber, 4);
